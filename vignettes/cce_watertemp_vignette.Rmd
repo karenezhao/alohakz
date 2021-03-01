@@ -1,0 +1,80 @@
+---
+title: "cce_watertemp_vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cce_watertemp_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(alohakz)
+library(tidyverse)
+```
+
+## Calculate annual average 
+
+```{r}
+annual_average <- cce_watertemp %>%
+  filter(sea_surface_temperature_flag==0) %>%
+  group_by(year) %>%
+  summarize(annual_avg_temp = mean(sea_surface_temperature_c, na.rm = TRUE))
+```
+
+```{r}
+annual_average %>%
+  ggplot(aes(x = year, y = annual_avg_temp)) +
+  geom_point() +
+  labs(x = "Year",
+       y = "Mean Sea-Surface Temperature (C)",
+       title = "Annual Mean Sea-Surface Temperature from 1916 to 2015 (C)") +
+  theme_minimal()
+```
+## Calculate monthly average 
+
+```{r}
+monthly_average <- cce_watertemp %>%
+  filter(sea_surface_temperature_flag==0) %>% # keep only good data
+  group_by(year, month) %>%
+  summarize(monthly_avg_temp = mean(sea_surface_temperature_c, na.rm = TRUE),
+  )
+```
+
+```{r}
+monthly_average %>%
+  filter(year==2015) %>%
+  ggplot(aes(x = month, y = monthly_avg_temp)) +
+  geom_point() +
+  labs(x = "Month",
+       y = "Mean Sea-Surface Temperature (C)",
+       title = "Sea-Surface Temperature (C) in 2015") +
+  theme_minimal()
+```
+## Calculate lowest and highest temperature over years 
+
+```{r}
+annual_minmax <- cce_watertemp %>%
+  filter(sea_surface_temperature_flag==0) %>% # keep only good data
+  group_by(year) %>%
+  summarize(min_temp = min(sea_surface_temperature_c, na.rm = TRUE),
+            max_temp = max(sea_surface_temperature_c, na.rm = TRUE),
+  )
+```
+```{r}
+annual_minmax %>%
+  ggplot(aes(x = year)) +
+  geom_point(aes(y=min_temp), color="blue") +
+  geom_point(aes(y=max_temp), color="orange") +
+  labs(x = "Year",
+       y = "Sea-Surface Temperature (C)",
+       title = "Lowest and Highest Day Sea-Surface Temperature (C)") +
+  theme_minimal()
+```
+
