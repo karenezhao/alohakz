@@ -1,12 +1,12 @@
 #' Title
 #'
 #' @param name
-#' @param print(name)
+#' @param print
 #'
 #' @return
 #' @export
 #'
-#' @examples print("name")
+#' @examples
 say_aloha <- function(name, print = TRUE) {
 
   message <- paste("Aloha,",

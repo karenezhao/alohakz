@@ -7,14 +7,11 @@
 say_aloha(name, print = TRUE)
 }
 \arguments{
-\item{print(name)}{}
+\item{print}{}
 }
 \value{
 
 }
 \description{
 Title
-}
-\examples{
-print("name")
 }
