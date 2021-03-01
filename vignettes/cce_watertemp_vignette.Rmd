@@ -34,8 +34,7 @@ annual_average %>%
   geom_point() +
   labs(x = "Year",
        y = "Mean Sea-Surface Temperature (C)",
-       title = "Annual Mean Sea-Surface Temperature from 1916 to 2015 (C)") +
-  theme_minimal()
+       title = "Annual Mean Sea-Surface Temperature from 1916 to 2015 (C)")
 ```
 ## Calculate monthly average 
 
@@ -49,13 +48,12 @@ monthly_average <- cce_watertemp %>%
 
 ```{r}
 monthly_average %>%
-  filter(year==2015) %>%
+  filter(year==2014) %>%
   ggplot(aes(x = month, y = monthly_avg_temp)) +
   geom_point() +
   labs(x = "Month",
        y = "Mean Sea-Surface Temperature (C)",
-       title = "Sea-Surface Temperature (C) in 2015") +
-  theme_minimal()
+       title = "Sea-Surface Temperature (C) in 2014") 
 ```
 ## Calculate lowest and highest temperature over years 
 
